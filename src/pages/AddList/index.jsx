@@ -1,7 +1,8 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { TaskInput } from "../../components/Input";
 import { Button } from "../../components/Button";
+import { PlusCircle, XCircle } from "lucide-react";
 
 export const AddTodoList = () => {
   const navigate = useNavigate();
@@ -47,39 +48,61 @@ export const AddTodoList = () => {
     task.heading.trim() !== "" && task.description.trim() !== "";
 
   return (
-    <div className="m-12 rounded-lg bg-white p-6 shadow-md">
-      <h2 className="mb-4 text-xl font-semibold">Add New Task</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="mx-auto mt-10 max-w-lg rounded-2xl bg-white p-8 shadow-lg">
+      <h2 className="mb-6 text-2xl font-semibold text-gray-800">✨ Add New Task</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
         {/* Heading Input */}
-        <TaskInput
-          name="heading"
-          label="Heading"
-          value={task.heading}
-          onChange={handleInputChange}
-          placeholder="Please Input Heading"
-        />
+        <div>
+          <label className="mb-2 block text-sm font-medium text-gray-700">
+            Task Title
+          </label>
+          <input
+            type="text"
+            name="heading"
+            value={task.heading}
+            onChange={handleInputChange}
+            placeholder="Enter task title..."
+            className="w-full rounded-lg border border-gray-300 p-3 text-gray-800 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+          />
+        </div>
+
         {/* Description Input */}
-        <TaskInput
-          name="description"
-          label="Description"
-          value={task.description}
-          onChange={handleInputChange}
-          placeholder="Please Input Description"
-        />
+        <div>
+          <label className="mb-2 block text-sm font-medium text-gray-700">
+            Description
+          </label>
+          <textarea
+            name="description"
+            value={task.description}
+            onChange={handleInputChange}
+            placeholder="Enter task details..."
+            rows="4"
+            className="w-full resize-none rounded-lg border border-gray-300 p-3 text-gray-800 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+          />
+        </div>
+
         {/* Buttons */}
-        <div className="flex justify-end gap-2">
-          <Button
+        <div className="flex justify-end gap-3">
+          <button
             type="button"
-            color="red"
-            message="Cancel"
             onClick={() => navigate("/")}
-          />
-          <Button
+            className=" cursor-pointer flex items-center gap-2 rounded-lg bg-red-500 px-5 py-2 text-white transition-all hover:bg-red-600 active:scale-95"
+          >
+            <XCircle size={18} />
+            Cancel
+          </button>
+          <button
             type="submit"
-            color="green"
-            message="Save"
             disabled={!isFormValid}
-          />
+            className={` flex items-center gap-2 rounded-lg px-5 py-2 text-white transition-all active:scale-95 ${
+              isFormValid
+                ? "bg-green-500 hover:bg-green-600 cursor-pointer"
+                : "cursor-not-allowed bg-gray-400"
+            }`}
+          >
+            <PlusCircle size={18} />
+            Save
+          </button>
         </div>
       </form>
     </div>
